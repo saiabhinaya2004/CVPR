@@ -1,0 +1,15 @@
+import cv2
+
+# Load the image in grayscale
+image_gray = cv2.imread('doraemon.jpg', cv2.IMREAD_GRAYSCALE)
+
+# Apply Median Filter
+median_blurred = cv2.medianBlur(image_gray, 5)
+
+# Show the original and median filtered image
+cv2.imshow('Original Image', image_gray)
+cv2.imshow('Median Filter', median_blurred)
+
+# Wait for a key press and close the windows
+cv2.waitKey(0)
+cv2.destroyAllWindows()
