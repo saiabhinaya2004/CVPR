@@ -1,0 +1,55 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the image in grayscale
+image = cv2.imread('word.png', cv2.IMREAD_GRAYSCALE)
+
+# Convert grayscale image to binary using thresholding
+_, binary_image = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
+
+# Define the kernel (structuring element) for morphological operations
+kernel = np.ones((5, 5), np.uint8)
+
+# Apply morphological operations
+dilated_image = cv2.dilate(binary_image, kernel, iterations=1)
+eroded_image = cv2.erode(binary_image, kernel, iterations=1)
+opened_image = cv2.morphologyEx(binary_image, cv2.MORPH_OPEN, kernel)
+closed_image = cv2.morphologyEx(binary_image, cv2.MORPH_CLOSE, kernel)
+
+# Display all images
+plt.figure(figsize=(12, 8))
+
+# Original Binary Image
+plt.subplot(2, 3, 1)
+plt.imshow(binary_image, cmap='gray')
+plt.title('Original Binary Image')
+plt.axis('off')
+
+# Dilation
+plt.subplot(2, 3, 2)
+plt.imshow(dilated_image, cmap='gray')
+plt.title('Dilation')
+plt.axis('off')
+
+# Erosion
+plt.subplot(2, 3, 3)
+plt.imshow(eroded_image, cmap='gray')
+plt.title('Erosion')
+plt.axis('off')
+
+# Opening
+plt.subplot(2, 3, 4)
+plt.imshow(opened_image, cmap='gray')
+plt.title('Opening')
+plt.axis('off')
+
+# Closing
+plt.subplot(2, 3, 5)
+plt.imshow(closed_image, cmap='gray')
+plt.title('Closing')
+plt.axis('off')
+
+# Show all the plots
+plt.tight_layout()
+plt.show()
