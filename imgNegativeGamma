@@ -1,0 +1,26 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the image in grayscale
+image = cv2.imread("shiv.jpg", cv2.IMREAD_GRAYSCALE)
+
+# 1. Image Negative Transformation
+negative = 255 - image
+
+# 2. Power Law (Gamma) Transformation (s = c * r^γ)
+gamma = 2.2  # Change this value to adjust brightness
+gamma_transformed = np.array(255 * (image / 255) ** gamma, dtype=np.uint8)
+
+# Display the images
+titles = ['Original', 'Negative', 'Power Law (Gamma)']
+images = [image, negative, gamma_transformed]
+
+plt.figure(figsize=(10, 6))
+for i in range(3):
+    plt.subplot(1, 3, i + 1)
+    plt.imshow(images[i], cmap='gray')
+    plt.title(titles[i])
+    plt.axis('off')
+plt.tight_layout()
+plt.show()
