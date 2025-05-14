@@ -1,0 +1,45 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Function to calculate and plot histogram
+def calculate_histogram(image):
+    histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
+    plt.figure(figsize=(8, 6))
+    plt.plot(histogram, color='black')
+    plt.title("Histogram of Image")
+    plt.xlabel("Pixel Intensity")
+    plt.ylabel("Frequency")
+    plt.grid(True)
+    plt.show()
+
+# Function for Histogram Equalization
+def histogram_equalization(image):
+    equalized_image = cv2.equalizeHist(image)
+    return equalized_image
+
+# Function for CLAHE (Contrast Limited Adaptive Histogram Equalization)
+def clahe_equalization(image):
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    clahe_image = clahe.apply(image)
+    return clahe_image
+
+# Load the image in grayscale
+image_path = 'peacock.jpg'  # Replace with the correct path to your image
+image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+
+# Step 1: Calculate and plot histogram of original image
+calculate_histogram(image)
+
+# Step 2: Perform Histogram Equalization
+equalized_image = histogram_equalization(image)
+
+# Step 3: Perform CLAHE
+clahe_image = clahe_equalization(image)
+
+# Step 4: Display all images
+cv2.imshow("Original Image", image)
+cv2.imshow("Histogram Equalized Image", equalized_image)
+cv2.imshow("CLAHE Image", clahe_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
